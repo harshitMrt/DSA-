@@ -1,0 +1,78 @@
+// naive approach
+
+class Solution {
+
+    public void add(List<List<Integer>> adj, int how){
+
+        if(adj.size()==how){
+            return;
+        }
+
+        ArrayList<Integer> temp=new ArrayList<>();
+        temp.add(1);
+
+        int size=adj.get(adj.size()-1).size();
+
+        for(int i=0;i<size-1;i++){
+            temp.add(adj.get(adj.size()-1).get(i)+
+                     adj.get(adj.size()-1).get(i+1));
+        }
+        temp.add(1);
+        adj.add(temp);
+        add(adj, how);
+
+        return;
+    }
+
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> adj=new ArrayList<>();
+
+        adj.add(new ArrayList<>());
+        adj.get(0).add(1);
+
+        if(numRows==2){
+            adj.add(new ArrayList<>());
+            adj.get(1).add(1);
+            adj.get(1).add(1);
+
+            return adj;
+        }
+
+        if(numRows>2){
+            add(adj, numRows);
+        }
+
+        return adj;
+    }
+}
+
+
+// obseravation nCr 
+import java.util.*;
+
+public class Main {
+
+    public static long nCr(int n, int r) {
+        long res = 1;
+
+        // calculating nCr:
+        for (int i = 0; i < r; i++) {
+            res = res * (n - i);
+            res = res / (i + 1);
+        }
+        return res;
+    }
+
+    public static void pascalTriangle(int n) {
+        // printing the entire row n:
+        for (int c = 1; c <= n; c++) {
+            System.out.print(nCr(n - 1, c - 1) + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        pascalTriangle(n);
+    }
+}
