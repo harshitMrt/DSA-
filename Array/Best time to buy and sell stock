@@ -1,0 +1,35 @@
+// naive approach (calculate for every pair using two nested for loops)
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int maxi=Integer.MIN_VALUE;
+
+        for(int i=0;i<prices.length;i++){
+            int diff=0;
+            for(int j=i+1;j<prices.length;j++){
+                diff=prices[j]-prices[i];
+                maxi=Math.max(maxi, diff);
+            }
+        }
+        if(maxi<0){
+            return 0;
+        }
+        return maxi;
+    }
+}
+
+// optimal approach 
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minpro=Integer.MAX_VALUE;
+        int maxpro=0;
+
+        for(int i=0;i<prices.length;i++){
+            minpro=Math.min(minpro, prices[i]);
+            maxpro=Math.max(maxpro, prices[i]-minpro);
+        }
+
+        return maxpro;
+    }
+}
